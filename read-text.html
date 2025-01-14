@@ -6,25 +6,22 @@
     <title>Text to Speech</title>
 </head>
 <body>
+    <button onclick="startSpeaking()">Click to Play</button>
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const text = urlParams.get("text");
+        function startSpeaking() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const text = urlParams.get("text");
 
-        if (text) {
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = "en-US"; // 언어 설정
-            utterance.onstart = () => {
-                console.log("음성 출력 시작");
-            };
-            utterance.onerror = (event) => {
-                console.error("음성 출력 오류:", event.error);
-            };
-            speechSynthesis.speak(utterance);
-            document.body.innerHTML = `<p>문장을 읽는 중입니다: ${text}</p>`;
-        } else {
-            document.body.innerHTML = "<p>전달된 텍스트가 없습니다.</p>";
+            if (text) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = "en-US"; // 영어 설정
+                utterance.onstart = () => console.log("음성 출력 시작");
+                utterance.onerror = (event) => console.error("음성 출력 오류:", event.error);
+                speechSynthesis.speak(utterance);
+            } else {
+                alert("전달된 텍스트가 없습니다.");
+            }
         }
     </script>
-    <p>문장을 읽는 중입니다. 브라우저에서 소리를 확인하세요.</p>
 </body>
 </html>
